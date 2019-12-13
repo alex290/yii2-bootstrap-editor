@@ -1,0 +1,42 @@
+.container-editor-html div {
+    min-height: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
+    border: 1px #000 dotted;
+}
+
+.container-editor-html {
+    padding: 5px;
+}
+
+.container-editor-html div:hover {
+    min-height: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
+    border: 1px #000 solid;
+}
+
+.container-editor-html .selected {
+    outline: 3px solid #3b97e3 !important;
+    outline-offset: -3px;
+}
+
+.bseditor-toolbar {
+    position: absolute;
+    background-color: #3b97e3;
+    color: white;
+    z-index: 10;
+    top: 0;
+    left: 0;
+}
+
+.bseditor-toolbar .item {
+    padding: 5px 7px;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 26px;
+    vertical-align: middle;
+    display: inline-block;
+}

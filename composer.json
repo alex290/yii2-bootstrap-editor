@@ -1,0 +1,21 @@
+{
+    "name": "alex290/yii2-bootstrap-editor",
+    "description": "Bootstrap 4 editor text Area",
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "WebGoal",
+            "email": "alex@webgoal.ru"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "~2.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "alex290\\bootstrapEditor\\": ""
+        }
+    }
+}
