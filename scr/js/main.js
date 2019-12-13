@@ -126,5 +126,6 @@ function load() {
 
 function posIlteMenu() {
     var position = $('div.selected').offset();
+
     $(".bseditor-toolbar").offset({ top: position.top - $('.bseditor-toolbar').innerHeight(), left: position.left });
 }
