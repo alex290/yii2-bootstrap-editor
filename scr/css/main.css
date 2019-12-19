@@ -1,18 +1,4 @@
-.container-editor-html div.container,
-.container-editor-html div.container-fluid,
-.container-editor-html div.row,
-.container-editor-html div.col-1,
-.container-editor-html div.col-2,
-.container-editor-html div.col-3,
-.container-editor-html div.col-4,
-.container-editor-html div.col-5,
-.container-editor-html div.col-6,
-.container-editor-html div.col-7,
-.container-editor-html div.col-8,
-.container-editor-html div.col-9,
-.container-editor-html div.col-10,
-.container-editor-html div.col-11,
-.container-editor-html div.col-12 {
+.container-editor-html div {
     min-height: 20px;
     margin-top: 5px;
     margin-bottom: 5px;
