@@ -38,6 +38,20 @@ function load() {
     });
     // --------------------------------------------------
 
+    // Добавление своих дочерних эелементов
+    $('.clickAddCostum').off("click");
+    $('.clickAddCostum').on('click', function() {
+        var dataJson = $(this).data('html');
+        var html = dataJson['html'];
+
+        $('.container-editor-html div.selected').html(html);
+        if (dataJson['scrypt']) {
+            eval(dataJson['scrypt']);
+        }
+        load();
+    });
+    // --------------------------------------------------
+
     // Удаление выделения
     document.querySelector('.container-editor-html').onclick = function(e) {
         if (e.target != this) { return true; }

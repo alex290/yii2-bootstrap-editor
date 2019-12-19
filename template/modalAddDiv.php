@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Json;
 
 ?>
 <!-- Modal Add Div -->
@@ -33,6 +34,13 @@ use yii\helpers\Html;
                     <div class="col-3 mb-3">
                         <?= Html::submitButton('Add Col 12', ['class' => 'btn btn-outline-dark clickAddInner  w-100', 'data-class' => 'col-12']) ?>
                     </div>
+                    <?php if ($this->costumButton != null) : ?>
+                        <?php foreach ($this->costumButton as $valueCostum) : ?>
+                            <div class="col-3 mb-3">
+                                <?= Html::submitButton($valueCostum['name'], ['class' => 'btn btn-outline-dark clickAddCostum  w-100', 'data-class' => 'col-12', 'data-html' => Json::encode($valueCostum)]) ?>
+                            </div>
+                        <?php endforeach ?>
+                    <?php endif ?>
                 </div>
             </div>
         </div>

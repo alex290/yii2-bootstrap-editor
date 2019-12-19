@@ -9,7 +9,7 @@ class BootstrapEdit extends \yii\base\Widget
 {
 
     public $content;
-    public $costumButton;
+    public $costumButton = null;
 
     public function run()
     {
