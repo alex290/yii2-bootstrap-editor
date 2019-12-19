@@ -34,11 +34,14 @@ Once the extension is installed, simply use it in your code by  :
 
 Своя кнопка
 
-    costumButton => [
+    $costumButton => [
         01 => [
             'name' => 'Название кнопки',
             'html' => 'HTML код',
-            'scrypt' => 'Скрипт активации например слайдер',
+            'scrypt' => 'Скрипт активации например слайдер', // Необязательный параметр
         ],
         ...
     ]
+
+
+    <?= BootstrapEdit::widget(['content' => $content, 'costumButton' => $costumButton ]) ?>
