@@ -28,21 +28,24 @@ Usage
 Once the extension is installed, simply use it in your code by  :
 
 ```php
-<?= BootstrapEdit::widget(['content' => $content ]) ?>```
+<?= BootstrapEdit::widget(['content' => $content ]) ?>
+```
 
 Дополнительные параметры
 
 Своя кнопка
+-----------
 
-    $costumButton => [
-        01 => [
-            'name' => 'Название кнопки',
-            'html' => 'HTML код',
-            'scrypt' => 'Скрипт активации например слайдер', // Необязательный параметр
-        ],
-        ...
-    ]
-
+```php
+$costumButton => [
+    01 => [
+        'name' => 'Название кнопки',
+        'html' => 'HTML код',
+        'scrypt' => 'Скрипт активации например слайдер', // Необязательный параметр
+    ],
+    ...
+]
+```
 
 ```php
 <?= BootstrapEdit::widget(['content' => $content, 'costumButton' => $costumButton ]) ?>
