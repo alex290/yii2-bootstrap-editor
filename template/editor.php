@@ -9,10 +9,16 @@ use yii\helpers\Html;
             <?= Html::submitButton('<i class="fas fa-plus"></i> add Container', ['class' => 'bs4-click-add btn btn-outline-dark', 'data-class' => 'container']) ?>
         </div>
         <div class="remote">
-            <h1>Hello</h1>
+            <ul class="resolutionBs4Widget d-flex">
+                <li data-size="Extralarge" title="Extra large"><i class="fas fa-tv fa-2x"></i></li>
+                <li data-size="Large" title="Large"><i class="fas fa-desktop fa-2x"></i></li>
+                <li data-size="Medium" title="Medium"><i class="fas fa-tablet-alt fa-2x"></i></li>
+                <li data-size="Small" title="Small"><i class="fas fa-mobile-alt fa-rotate-90 fa-2x"></i></li>
+                <li data-size="Extrasmall" title="Extra small"><i class="fas fa-mobile-alt fa-2x"></i></li>
+            </ul>
         </div>
     </div>
-    <div class="card-body">
+    <div class="card-body d-flex justify-content-center">
         <div class="container-editor-html bg-light" data-select="none"></div>
     </div>
 </div>
@@ -27,4 +33,3 @@ use yii\helpers\Html;
     <div class="fas fa-cog item clickSetting"></div>
     <div class="fas fa-trash-alt item click-remove-obj"></div>
 </div>
-

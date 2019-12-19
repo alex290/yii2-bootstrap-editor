@@ -1,9 +1,48 @@
+var size = {
+    'Extralarge': {
+        'size': '100%',
+        'class': 'col-xl'
+    },
+    'Large': {
+        'size': '1100px',
+        'class': 'col-lg'
+    },
+    'Medium': {
+        'size': '900px',
+        'class': 'col-md'
+    },
+    'Small': {
+        'size': '700px',
+        'class': 'col-sm'
+    },
+    'Extrasmall': {
+        'size': '400px',
+        'class': 'col'
+    },
+};
+
+var sizeRab = 'Extralarge';
+var frstResize = true;
+
 jQuery(document).ready(function($) {
+
+    $('.container-editor-html').css({
+        width: size[sizeRab]['size'],
+    });
+
     $('.bs4-click-add').on('click', function() {
         var calss = $(this).data('class');
         var html = $('.container-editor-html').html();
         $('.container-editor-html').html(html + '<div class="' + calss + '"></div>');
         load();
+    });
+
+    $('ul.resolutionBs4Widget li').on('click', function() {
+        sizeRab = $(this).data('size');
+        $('.container-editor-html').css({
+            width: size[sizeRab]['size'],
+        });
+        frstResize = false;
     });
 
 });
@@ -69,6 +108,11 @@ function load() {
             if (element.search('col') != -1) {
                 var classTeml = element;
                 var classNewArr = element.split('-');
+                var classNewSize;
+                if (element.search(size[sizeRab]['class']) == -1) {
+                    classNewSize = size[sizeRab]['class'] + '-' + classNewArr[classNewArr.length - 1];
+                }
+
                 var classNew;
                 if (classNewArr[classNewArr.length - 1] < 12) {
                     classNewArr[classNewArr.length - 1] = Number(classNewArr[classNewArr.length - 1]) + 1;
@@ -82,6 +126,7 @@ function load() {
 
                     $('div.selected').removeClass(classTeml);
                     $('div.selected').addClass(classNew);
+                    $('div.selected').addClass(classNewSize);
                     posIlteMenu();
                 }
 

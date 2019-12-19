@@ -8,6 +8,11 @@
 
 .container-editor-html {
     padding: 5px;
+    -webkit-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -ms-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    transition: all 0.2s linear;
 }
 
 .container-editor-html div:hover {
@@ -35,4 +40,17 @@
     width: 26px;
     vertical-align: middle;
     display: inline-block;
+}
+
+ul.resolutionBs4Widget li {
+    list-style-type: none;
+    list-style-image: none;
+    cursor: pointer;
+    margin-left: 10px;
+    padding-right: 10px;
+}
+
+ul.resolutionBs4Widg {
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
 }
