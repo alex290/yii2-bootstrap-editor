@@ -109,24 +109,21 @@ function load() {
                 var classTeml = element;
                 var classNewArr = element.split('-');
                 var classNewSize;
+                var summ = Number(classNewArr[classNewArr.length - 1]);
                 if (element.search(size[sizeRab]['class']) == -1) {
-                    classNewSize = size[sizeRab]['class'] + '-' + classNewArr[classNewArr.length - 1];
+                    classNewSize = size[sizeRab]['class'] + '-' + summ;
+                } else {
+                    classNewArr = element.split(size[sizeRab]['class']);
+                    var str = classNewArr[classNewArr.length - 1];
+                    summ = Number(str.replace('-', ''));
                 }
-
-                var classNew;
-                if (classNewArr[classNewArr.length - 1] < 12) {
-                    classNewArr[classNewArr.length - 1] = Number(classNewArr[classNewArr.length - 1]) + 1;
-                    $(classNewArr).each(function(index, element) {
-                        if (index == 0) {
-                            classNew = element;
-                        } else {
-                            classNew = classNew + '-' + element;
-                        }
-                    });
-
-                    $('div.selected').removeClass(classTeml);
-                    $('div.selected').addClass(classNew);
-                    $('div.selected').addClass(classNewSize);
+                console.log(summ);
+                var newSumm;
+                if (summ < 12) {
+                    newSumm = summ + 1;
+                    $('div.selected').removeClass(size[sizeRab]['class'] + '-' + summ);
+                    // $('div.selected').addClass(classNew);
+                    $('div.selected').addClass(size[sizeRab]['class'] + '-' + newSumm);
                     posIlteMenu();
                 }
 
