@@ -28,6 +28,9 @@ Usage
 Once the extension is installed, simply use it in your code by  :
 
 ```php
+<?php
+    use alex290\bootstrapEditor\BootstrapEdit;
+?>
 <?= BootstrapEdit::widget(['content' => $content ]) ?>
 ```
 
@@ -48,5 +51,8 @@ $costumButton => [
 ```
 
 ```php
+<?php
+    use alex290\bootstrapEditor\BootstrapEdit;
+?>
 <?= BootstrapEdit::widget(['content' => $content, 'costumButton' => $costumButton ]) ?>
 ```
