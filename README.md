@@ -42,7 +42,9 @@ $costumButton => [
         'scrypt' => 'Скрипт активации например слайдер', // Необязательный параметр
     ],
     ...
-]```
+]
+```
 
-
-    <?= BootstrapEdit::widget(['content' => $content, 'costumButton' => $costumButton ]) ?>
+```php
+<?= BootstrapEdit::widget(['content' => $content, 'costumButton' => $costumButton ]) ?>
+```
