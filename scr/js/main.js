@@ -21,21 +21,47 @@ var size = {
     },
 };
 
+var iframe = $('iframe#html-frame').contents();
+
+var iframeDoc = iframe.find('body');
+iframeDoc.html('<div class="frame-dashed-wrap"></div>');
+
+var iframeDocCont = iframeDoc.find('.frame-dashed-wrap');
+
 var sizeRab = 'Extralarge';
 var frstResize = true;
 
 jQuery(document).ready(function($) {
 
+    var cssIframe = $('.json-text').text();
+    var headFrame = iframe.find('head');
+    $(JSON.parse(cssIframe)).each(function(index, element) {
+
+        // console.log(element);
+        headFrame.append($("<link/>", {
+            rel: "stylesheet",
+            href: element,
+            type: "text/css"
+        }));
+
+    });
+
+
     $('.container-editor-html').css({
         width: size[sizeRab]['size'],
     });
 
+
+
     $('.bs4-click-add').on('click', function() {
         var calss = $(this).data('class');
-        var html = $('.container-editor-html').html();
-        $('.container-editor-html').html(html + '<div class="' + calss + '"></div>');
+        var html = iframeDocCont.html();
+        console.log(html);
+        iframeDocCont.html(html + '<div class="' + calss + '"></div>');
         load();
     });
+
+    // ;
 
     $('ul.resolutionBs4Widget li').on('click', function() {
         sizeRab = $(this).data('size');

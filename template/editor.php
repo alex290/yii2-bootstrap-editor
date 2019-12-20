@@ -1,7 +1,20 @@
 <?php
 
+use alex290\bootstrapEditor\AssetsBundle;
+use yii\helpers\BaseJson;
 use yii\helpers\Html;
+use yii\helpers\Json;
+
+$webAsset = AssetsBundle::register($this->view);
+$cssArr = [];
+foreach ($webAsset->css as $valueCss) {
+    $cssArr[] = '/web'. $webAsset->baseUrl. '/'. $valueCss;
+}
+
+$jsonCss = BaseJson::encode($cssArr);
+
 ?>
+<div class="json-text"><?= $jsonCss ?></div>
 <div class="card border border-info w-100 bg-dark">
     <div class="card-header d-flex justify-content-between bg-light">
         <div class="addButton">
@@ -19,7 +32,9 @@ use yii\helpers\Html;
         </div>
     </div>
     <div class="card-body d-flex justify-content-center">
-        <div class="container-editor-html bg-light" data-select="none"></div>
+        <div class="container-editor-html bg-light" data-select="none" data-style="<?= $jsonCss ?>">
+            <iframe allowfullscreen="allowfullscreen" id="html-frame" width="100%"></iframe>
+        </div>
     </div>
 </div>
 
