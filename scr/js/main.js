@@ -44,6 +44,9 @@ jQuery(document).ready(function($) {
 
     // console.log(bseditorToolbar);
     var cssIframe = $('.json-text').text();
+    var styleIframe = $('.json-style').text();
+    var scryptIframe = $('.json-scrypt').text();
+    console.log(scryptIframe);
     var headFrame = iframe.find('head');
     $(JSON.parse(cssIframe)).each(function(index, element) {
 
@@ -56,6 +59,26 @@ jQuery(document).ready(function($) {
 
     });
 
+    var styleApand = '';
+    $(JSON.parse(styleIframe)).each(function(index, element) {
+        styleApand = styleApand + element;
+    });
+    styleApand = '<style>' + styleApand + '</style>';
+
+    $(JSON.parse(scryptIframe)).each(function(index, element) {
+
+        // console.log(element);
+        iframeDoc.append($("<scrypt/>", {
+            href: element,
+        }));
+
+    });
+
+
+    // console.log(styleApand);
+    headFrame.append(styleApand);
+    // iframeDocCont.before('<style>' + styleApand + '</style>');
+
 
     $('.container-editor-html').css({
         width: size[sizeRab]['size'],
@@ -66,7 +89,7 @@ jQuery(document).ready(function($) {
     $('.bs4-click-add').on('click', function() {
         var calss = $(this).data('class');
         var html = iframeDocCont.html();
-        console.log(html);
+        // console.log(html);
         iframeDocCont.html(html + '<div class="' + calss + '"></div>');
         load();
     });
@@ -114,14 +137,17 @@ function load() {
     // --------------------------------------------------
 
     // Добавление своих дочерних эелементов
-    bseditorToolbar.find('.clickAddCostum').off("click");
-    bseditorToolbar.find('.clickAddCostum').on('click', function() {
+    $('.clickAddCostum').off("click");
+    $('.clickAddCostum').on('click', function() {
         var dataJson = $(this).data('html');
         var html = dataJson['html'];
 
+
         iframeDocCont.find('div.selected').html(html);
         if (dataJson['scrypt']) {
-            eval(dataJson['scrypt']);
+            var scryptIframe = dataJson['scrypt'].replace("$", "iframeDocCont.find");
+            // console.log(scryptIframe);
+            eval(scryptIframe);
         }
         load();
     });

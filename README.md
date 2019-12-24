@@ -56,3 +56,58 @@ $costumButton => [
 ?>
 <?= BootstrapEdit::widget(['content' => $content, 'costumButton' => $costumButton ]) ?>
 ```
+
+Свои стили и скирпты
+--------------------
+
+```php
+$costumCssScrypt = [
+    'css' => [
+        "/web/css/slick.css",
+    ],
+    'js' => [
+        "/web/js/slick.min.js",
+    ]
+];
+```
+
+```php
+<?php
+    use alex290\bootstrapEditor\BootstrapEdit;
+?>
+<?= BootstrapEdit::widget(['content' => $content, 'costumCssScrypt' => $costumCssScrypt]) ?>
+```
+
+```php
+$costumCss = <<<CSS
+.block-content-collect1 {
+    float: left;
+    width: 100%;
+    box-shadow: 0px 3.58109px 3.58109px rgba(0, 0, 0, 0.25);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.galery-collection1 {
+    float: left;
+    width: 100%;
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+}
+
+.galery-collection1 li {
+    display: block;
+    width: 100%;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    height: 600px;
+}
+CSS;
+```
+
+```php
+<?php
+    use alex290\bootstrapEditor\BootstrapEdit;
+?>
+<?= BootstrapEdit::widget(['content' => $content, 'costumeStyle' => json_encode([$costumCss, ...])]) ?>
+```
