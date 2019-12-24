@@ -87,16 +87,16 @@ jQuery(document).ready(function($) {
 
 function load() {
     // Выделение элементов по клику
-    $(iframeDocCont).find('div').off("click");
-    $(iframeDocCont).find('div').on('click', function(event) {
+    iframeDocCont.find('div').off("click");
+    iframeDocCont.find('div').on('click', function(event) {
 
-        $(iframeDocCont).find('div').removeClass('selected');
+        iframeDocCont.find('div').removeClass('selected');
         bseditorToolbar.removeClass('d-none');
         $(this).addClass('selected');
         if ($(this).hasClass('container') || $(this).hasClass('row') || $(this).hasClass('container-fluid')) {
-            $('.noneCont').addClass('d-none');
+            bseditorToolbar.find('.noneCont').addClass('d-none');
         } else {
-            $('.noneCont').removeClass('d-none');
+            bseditorToolbar.find('.noneCont').removeClass('d-none');
         }
         posIlteMenu();
         event.stopPropagation();
@@ -107,8 +107,8 @@ function load() {
     $('.clickAddInner').off("click");
     $('.clickAddInner').on('click', function() {
         var calss = $(this).data('class');
-        var html = $('.container-editor-html div.selected').html();
-        $('.container-editor-html div.selected').html(html + '<div class="' + calss + '"></div>');
+        var html = iframeDocCont.find('div.selected').html();
+        iframeDocCont.find('div.selected').html(html + '<div class="' + calss + '"></div>');
         load();
     });
     // --------------------------------------------------
@@ -119,7 +119,7 @@ function load() {
         var dataJson = $(this).data('html');
         var html = dataJson['html'];
 
-        $('.container-editor-html div.selected').html(html);
+        iframeDocCont.find('div.selected').html(html);
         if (dataJson['scrypt']) {
             eval(dataJson['scrypt']);
         }
@@ -128,17 +128,29 @@ function load() {
     // --------------------------------------------------
 
     // Удаление выделения
-    document.querySelector('.container-editor-html').onclick = function(e) {
+    iframeDoc.off("click");
+    iframeDoc.on('click', function(e) {
         if (e.target != this) { return true; }
-        $('.container-editor-html div').removeClass('selected');
+        iframeDocCont.find('div').removeClass('selected');
         bseditorToolbar.addClass('d-none');
-    };
+    });
+
+    $(document).off("click");
+    $(document).on('click', function(e) {
+        iframeDocCont.find('div').removeClass('selected');
+        bseditorToolbar.addClass('d-none');
+        $('#exampleModalAddDiv').modal('hide');
+    });
+    /*document.querySelector('.container-editor-html').onclick = function(e) {
+
+        
+    };*/
     // --------------------------------------------------------
 
     // Увеличение колонки
     bseditorToolbar.find('.clickPlusCol').off("click");
     bseditorToolbar.find('.clickPlusCol').on('click', function() {
-        var classDiv = $('div.selected').attr('class').split(/\s+/);
+        var classDiv = iframeDocCont.find('div.selected').attr('class').split(/\s+/);
         $(classDiv).each(function(index, element) {
 
             if (element.search('col') != -1) {
@@ -153,13 +165,13 @@ function load() {
                     var str = classNewArr[classNewArr.length - 1];
                     summ = Number(str.replace('-', ''));
                 }
-                console.log(summ);
+                // console.log(summ);
                 var newSumm;
                 if (summ < 12) {
                     newSumm = summ + 1;
-                    $('div.selected').removeClass(size[sizeRab]['class'] + '-' + summ);
+                    iframeDocCont.find('div.selected').removeClass(size[sizeRab]['class'] + '-' + summ);
                     // $('div.selected').addClass(classNew);
-                    $('div.selected').addClass(size[sizeRab]['class'] + '-' + newSumm);
+                    iframeDocCont.find('div.selected').addClass(size[sizeRab]['class'] + '-' + newSumm);
                     posIlteMenu();
                 }
 
@@ -170,9 +182,9 @@ function load() {
     // ---------------------------------------------------------
 
     // Уменьшение колонки
-    $('.clickMinusCol').off("click");
-    $('.clickMinusCol').on('click', function() {
-        var classDiv = $('div.selected').attr('class').split(/\s+/);
+    bseditorToolbar.find('.clickMinusCol').off("click");
+    bseditorToolbar.find('.clickMinusCol').on('click', function() {
+        var classDiv = iframeDocCont.find('div.selected').attr('class').split(/\s+/);
         $(classDiv).each(function(index, element) {
 
             if (element.search('col') != -1) {
@@ -188,8 +200,8 @@ function load() {
                             classNew = classNew + '-' + element;
                         }
                     });
-                    $('div.selected').removeClass(classTeml);
-                    $('div.selected').addClass(classNew);
+                    iframeDocCont.find('div.selected').removeClass(classTeml);
+                    iframeDocCont.find('div.selected').addClass(classNew);
                     posIlteMenu();
                 }
 
@@ -202,8 +214,8 @@ function load() {
 
 
     bseditorToolbar.find('.click-remove-obj').on('click', function() {
-        $('.container-editor-html div.selected').remove();
-        $('.bseditor-toolbar').addClass('d-none');
+        iframeDocCont.find('div.selected').remove();
+        bseditorToolbar.addClass('d-none');
     });
 
     bseditorToolbar.find('.clickAddDiv').on('click', function() {
@@ -217,7 +229,7 @@ function load() {
 }
 
 function posIlteMenu() {
-    var position = $(iframeDocCont).find('div.selected').offset();
+    var position = iframeDocCont.find('div.selected').offset();
     var innerHeightEl = bseditorToolbar.innerHeight();
     // console.log(innerHeightEl);
 
