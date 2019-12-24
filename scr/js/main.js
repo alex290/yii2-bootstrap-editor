@@ -46,7 +46,7 @@ jQuery(document).ready(function($) {
     var cssIframe = $('.json-text').text();
     var styleIframe = $('.json-style').text();
     var scryptIframe = $('.json-scrypt').text();
-    console.log(scryptIframe);
+    // console.log(scryptIframe);
     var headFrame = iframe.find('head');
     $(JSON.parse(cssIframe)).each(function(index, element) {
 
