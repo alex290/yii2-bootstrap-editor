@@ -25,14 +25,24 @@ var iframe = $('iframe#html-frame').contents();
 
 var iframeDoc = iframe.find('body');
 iframeDoc.html('<div class="frame-dashed-wrap"></div>');
+var bseditorToolbar = '<div class="bseditor-toolbar d-none">' + $('.bseditor-toolbar').html() + '</div>';
+$('.bseditor-toolbar').remove();
+
 
 var iframeDocCont = iframeDoc.find('.frame-dashed-wrap');
+iframeDocCont.after(bseditorToolbar);
+
+bseditorToolbar = iframeDoc.find('.bseditor-toolbar');
 
 var sizeRab = 'Extralarge';
 var frstResize = true;
 
+
+
+
 jQuery(document).ready(function($) {
 
+    // console.log(bseditorToolbar);
     var cssIframe = $('.json-text').text();
     var headFrame = iframe.find('head');
     $(JSON.parse(cssIframe)).each(function(index, element) {
@@ -77,11 +87,11 @@ jQuery(document).ready(function($) {
 
 function load() {
     // Выделение элементов по клику
-    $('.container-editor-html div').off("click");
-    $('.container-editor-html div').on('click', function(event) {
+    $(iframeDocCont).find('div').off("click");
+    $(iframeDocCont).find('div').on('click', function(event) {
 
-        $('.container-editor-html div').removeClass('selected');
-        $('.bseditor-toolbar').removeClass('d-none');
+        $(iframeDocCont).find('div').removeClass('selected');
+        bseditorToolbar.removeClass('d-none');
         $(this).addClass('selected');
         if ($(this).hasClass('container') || $(this).hasClass('row') || $(this).hasClass('container-fluid')) {
             $('.noneCont').addClass('d-none');
@@ -104,8 +114,8 @@ function load() {
     // --------------------------------------------------
 
     // Добавление своих дочерних эелементов
-    $('.clickAddCostum').off("click");
-    $('.clickAddCostum').on('click', function() {
+    bseditorToolbar.find('.clickAddCostum').off("click");
+    bseditorToolbar.find('.clickAddCostum').on('click', function() {
         var dataJson = $(this).data('html');
         var html = dataJson['html'];
 
@@ -121,13 +131,13 @@ function load() {
     document.querySelector('.container-editor-html').onclick = function(e) {
         if (e.target != this) { return true; }
         $('.container-editor-html div').removeClass('selected');
-        $('.bseditor-toolbar').addClass('d-none');
+        bseditorToolbar.addClass('d-none');
     };
     // --------------------------------------------------------
 
     // Увеличение колонки
-    $('.clickPlusCol').off("click");
-    $('.clickPlusCol').on('click', function() {
+    bseditorToolbar.find('.clickPlusCol').off("click");
+    bseditorToolbar.find('.clickPlusCol').on('click', function() {
         var classDiv = $('div.selected').attr('class').split(/\s+/);
         $(classDiv).each(function(index, element) {
 
@@ -191,23 +201,25 @@ function load() {
     // ---------------------------------------------------------
 
 
-    $('.click-remove-obj').on('click', function() {
+    bseditorToolbar.find('.click-remove-obj').on('click', function() {
         $('.container-editor-html div.selected').remove();
         $('.bseditor-toolbar').addClass('d-none');
     });
 
-    $('.clickAddDiv').on('click', function() {
+    bseditorToolbar.find('.clickAddDiv').on('click', function() {
         $('#exampleModalAddDiv').modal('show');
     });
 
-    $('.clickSetting').on('click', function() {
+    bseditorToolbar.find('.clickSetting').on('click', function() {
         $('#exampleModalSetting').modal('show');
     });
 
 }
 
 function posIlteMenu() {
-    var position = $('div.selected').offset();
+    var position = $(iframeDocCont).find('div.selected').offset();
+    var innerHeightEl = bseditorToolbar.innerHeight();
+    // console.log(innerHeightEl);
 
-    $(".bseditor-toolbar").offset({ top: position.top - $('.bseditor-toolbar').innerHeight(), left: position.left });
+    bseditorToolbar.offset({ top: position.top - innerHeightEl, left: position.left });
 }

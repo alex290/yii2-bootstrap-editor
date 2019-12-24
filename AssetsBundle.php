@@ -19,6 +19,9 @@ class AssetsBundle extends AssetBundle {
     
     public $sourcePath  = '@vendor/alex290/yii2-bootstrap-editor/scr';
     public $css = [
+        'css/bootstrap.min.css',
+        'css/fontawesome/all.css',
+        'css/fontawesome/solid.css',
         'css/main.css',
     ];
     public $js = [

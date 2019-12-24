@@ -1,4 +1,4 @@
-.container-editor-html div {
+.frame-dashed-wrap div {
     min-height: 20px;
     margin-top: 5px;
     margin-bottom: 5px;
@@ -6,8 +6,8 @@
     border: 1px #000 dotted;
 }
 
-.container-editor-html {
-    padding: 5px;
+.frame-dashed-wrap {
+    padding: 30px 5px 5px 5px;
     -webkit-transition: all 0.2s linear;
     -moz-transition: all 0.2s linear;
     -ms-transition: all 0.2s linear;
@@ -15,11 +15,11 @@
     transition: all 0.2s linear;
 }
 
-.container-editor-html div:hover {
+.frame-dashed-wrap div:hover {
     border: 1px #000 solid;
 }
 
-.container-editor-html .selected {
+.frame-dashed-wrap .selected {
     outline: 3px solid #3b97e3 !important;
     outline-offset: -3px;
 }

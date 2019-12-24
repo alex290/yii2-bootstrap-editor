@@ -1,17 +1,14 @@
 <?php
 
-use alex290\bootstrapEditor\AssetsBundle;
-use yii\helpers\BaseJson;
 use yii\helpers\Html;
 use yii\helpers\Json;
 
-$webAsset = AssetsBundle::register($this->view);
 $cssArr = [];
-foreach ($webAsset->css as $valueCss) {
-    $cssArr[] = '/web'. $webAsset->baseUrl. '/'. $valueCss;
+foreach ($this->registerCssScrypt->css as $valueCss) {
+    $cssArr[] = '/web' . $this->registerCssScrypt->baseUrl . '/' . $valueCss;
 }
 
-$jsonCss = BaseJson::encode($cssArr);
+$jsonCss = Json::encode($cssArr);
 
 ?>
 <div class="json-text"><?= $jsonCss ?></div>

@@ -11,9 +11,11 @@ class BootstrapEdit extends \yii\base\Widget
     public $content;
     public $costumButton = null;
 
+    protected $registerCssScrypt;
+
     public function run()
     {
-        AssetsBundle::register($this->view);
+        $this->registerCssScrypt = AssetsBundle::register($this->view);
         return $this->toTemplate($this->content);
     }
 
