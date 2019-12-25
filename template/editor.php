@@ -4,9 +4,14 @@ use yii\helpers\Html;
 use yii\helpers\Json;
 
 $cssArr = [];
+$jsArr = [];
 $scryptArr = [];
 foreach ($this->registerCssScrypt->css as $valueCss) {
     $cssArr[] = '/web' . $this->registerCssScrypt->baseUrl . '/' . $valueCss;
+}
+
+foreach ($this->registerCssScrypt->js as $valueJs) {
+    $jsArr[] = '/web' . $this->registerCssScrypt->baseUrl . '/' . $valueJs;
 }
 if ($this->costumCssScrypt != null) {
     foreach ($this->costumCssScrypt['css'] as $valueCss) {
@@ -18,13 +23,16 @@ if ($this->costumCssScrypt != null) {
         $scryptArr[] = $valueScrypt;
     }
 }
+
 $jsonScrypt = Json::encode($scryptArr);
 $jsonCss = Json::encode($cssArr);
 
 ?>
 <div class="json-text"><?= $jsonCss ?></div>
+<div class="json-js d-none"><?= $jsArr[0] ?></div>
 <div class="json-style"><?= $this->costumeStyle ?></div>
-<div class="json-scrypt"><?= $jsonScrypt ?></div>
+<div class="json-scrypt d-none"><?= $jsonScrypt ?></div>
+<div class="json-widgetScrypt d-none"><?= Json::encode($this->costumButton) ?></div>
 <div class="card border border-info w-100 bg-dark">
     <div class="card-header d-flex justify-content-between bg-light">
         <div class="addButton">
