@@ -92,6 +92,7 @@ jQuery(document).ready(function($) {
         // console.log(html);
         iframeDocCont.html(html + '<div class="' + calss + '"></div>');
         load();
+        resize();
     });
 
     // ;
@@ -105,7 +106,6 @@ jQuery(document).ready(function($) {
     });
 
 });
-
 
 
 function load() {
@@ -133,6 +133,7 @@ function load() {
         var html = iframeDocCont.find('div.selected').html();
         iframeDocCont.find('div.selected').html(html + '<div class="' + calss + '"></div>');
         load();
+        resize();
     });
     // --------------------------------------------------
 
@@ -150,6 +151,7 @@ function load() {
             eval(scryptIframe);
         }
         load();
+        resize();
     });
     // --------------------------------------------------
 
@@ -203,6 +205,7 @@ function load() {
 
             }
         });
+        resize();
 
     });
     // ---------------------------------------------------------
@@ -234,6 +237,7 @@ function load() {
 
             }
         });
+        resize();
 
     });
     // ---------------------------------------------------------
@@ -242,6 +246,7 @@ function load() {
     bseditorToolbar.find('.click-remove-obj').on('click', function() {
         iframeDocCont.find('div.selected').remove();
         bseditorToolbar.addClass('d-none');
+        resize();
     });
 
     bseditorToolbar.find('.clickAddDiv').on('click', function() {
@@ -260,4 +265,12 @@ function posIlteMenu() {
     // console.log(innerHeightEl);
 
     bseditorToolbar.offset({ top: position.top - innerHeightEl, left: position.left });
+}
+
+function resize() {
+    var heightBody = iframe.outerHeight();
+    $('iframe#html-frame').css({
+        height: heightBody + 'px',
+    });
+
 }
