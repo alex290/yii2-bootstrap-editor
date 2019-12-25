@@ -43,7 +43,7 @@ $jsonCss = Json::encode($cssArr);
     </div>
     <div class="card-body d-flex justify-content-center">
         <div class="container-editor-html bg-light" data-select="none" data-style="<?= $jsonCss ?>">
-            <iframe allowfullscreen="allowfullscreen" id="html-frame" width="100%"></iframe>
+            <iframe allowfullscreen="allowfullscreen" id="html-frame" width="100%" scrolling="no"></iframe>
         </div>
     </div>
 </div>
