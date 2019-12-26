@@ -137,10 +137,9 @@ function load() {
     $('.clickAddInner').off("click");
     $('.clickAddInner').on('click', function() {
         var calss = $(this).data('class');
-        var html = iframeDocCont.find('div.selected').html();
 
         let idDiv = 'div-' + randomInteger(100, 99999);
-        htmlContent.find('div.selected').html($('<div class="' + calss + '" id = "' + idDiv + '"></div>'));
+        htmlContent.find('div.selected').append($('<div class="' + calss + '" id = "' + idDiv + '"></div>'));
         iframeDocCont.html(htmlContent.html());
         load();
         resize();
@@ -153,8 +152,11 @@ function load() {
         var dataJson = $(this).data('html');
         var html = dataJson['html'];
 
+        let idDiv = 'div-' + randomInteger(100, 99999);
+        htmlContent.find('div.selected').append($('<div class="d-flex" id = "' + idDiv + '">' + html + '</div>'));
+        iframeDocCont.html(htmlContent.html());
 
-        iframeDocCont.find('div.selected').html(html);
+        // iframeDocCont.find('div.selected').html(html);
         if (dataJson['scrypt']) {
             var scryptIframe = dataJson['scrypt'].replace("$", "iframeDocCont.find");
             // console.log(scryptIframe);
