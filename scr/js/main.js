@@ -90,7 +90,7 @@ jQuery(document).ready(function($) {
         var calss = $(this).data('class');
         var html = iframeDocCont.html();
         let idDiv = 'div-' + randomInteger(100, 99999);
-        htmlContent.append($('<div class="' + calss + '" id = "' + idDiv + '"></div>'));
+        htmlContent.append($('<div class="' + calss + ' widgetElement" id = "' + idDiv + '"></div>'));
         // console.log(html);
         iframeDocCont.html(htmlContent.html());
         load();
@@ -112,8 +112,8 @@ jQuery(document).ready(function($) {
 
 function load() {
     // Выделение элементов по клику
-    iframeDocCont.find('div').off("click");
-    iframeDocCont.find('div').on('click', function(event) {
+    iframeDocCont.find('div.widgetElement').off("click");
+    iframeDocCont.find('div.widgetElement').on('click', function(event) {
 
         let idDiv = $(this).attr('id');
 
@@ -139,7 +139,7 @@ function load() {
         var calss = $(this).data('class');
 
         let idDiv = 'div-' + randomInteger(100, 99999);
-        htmlContent.find('div.selected').append($('<div class="' + calss + '" id = "' + idDiv + '"></div>'));
+        htmlContent.find('div.selected').append($('<div class="' + calss + ' widgetElement" id = "' + idDiv + '"></div>'));
         iframeDocCont.html(htmlContent.html());
         load();
         resize();
@@ -153,7 +153,7 @@ function load() {
         var html = dataJson['html'];
 
         let idDiv = 'div-' + randomInteger(100, 99999);
-        htmlContent.find('div.selected').append($('<div class="d-flex" id = "' + idDiv + '">' + html + '</div>'));
+        htmlContent.find('div.selected').append($('<div class="d-flex widgetElement" id = "' + idDiv + '">' + html + '</div>'));
         iframeDocCont.html(htmlContent.html());
 
         // iframeDocCont.find('div.selected').html(html);
@@ -168,6 +168,7 @@ function load() {
     // --------------------------------------------------
 
     // Удаление выделения
+
     iframeDoc.off("click");
     iframeDoc.on('click', function(e) {
         if (e.target != this) { return true; }
@@ -256,6 +257,7 @@ function load() {
 
 
     bseditorToolbar.find('.click-remove-obj').on('click', function() {
+        htmlContent.find('div.selected').remove();
         iframeDocCont.find('div.selected').remove();
         bseditorToolbar.addClass('d-none');
         resize();
