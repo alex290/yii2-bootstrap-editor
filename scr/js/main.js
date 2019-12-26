@@ -90,7 +90,7 @@ jQuery(document).ready(function($) {
         var calss = $(this).data('class');
         var html = iframeDocCont.html();
         let idDiv = 'div-' + randomInteger(100, 99999);
-        htmlContent = htmlContent.append($('<div class="' + calss + '" id = "' + idDiv + '"></div>'));
+        htmlContent.append($('<div class="' + calss + '" id = "' + idDiv + '"></div>'));
         // console.log(html);
         iframeDocCont.html(htmlContent.html());
         load();
@@ -122,7 +122,7 @@ function load() {
         bseditorToolbar.removeClass('d-none');
         $(this).addClass('selected');
         htmlContent.find('#' + idDiv).addClass('selected');
-        console.log(htmlContent.html());
+        // console.log(htmlContent.html());
         if ($(this).hasClass('container') || $(this).hasClass('row') || $(this).hasClass('container-fluid')) {
             bseditorToolbar.find('.noneCont').addClass('d-none');
         } else {
@@ -138,7 +138,10 @@ function load() {
     $('.clickAddInner').on('click', function() {
         var calss = $(this).data('class');
         var html = iframeDocCont.find('div.selected').html();
-        iframeDocCont.find('div.selected').html(html + '<div class="' + calss + '"></div>');
+
+        let idDiv = 'div-' + randomInteger(100, 99999);
+        htmlContent.find('div.selected').html($('<div class="' + calss + '" id = "' + idDiv + '"></div>'));
+        iframeDocCont.html(htmlContent.html());
         load();
         resize();
     });
