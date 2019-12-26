@@ -40,7 +40,19 @@ var frstResize = true;
 
 var htmlContent = $('<div/>').html($('input.inputContent').val());
 
+var htmlScrypt = $('input.inputScrypt').val();
+
 jQuery(document).ready(function($) {
+
+    $('.onclickReturnContent').on('click', function() {
+        returnContent();
+        // return false;
+    });
+    iframeDocCont.html(htmlContent.html());
+
+    setTimeout(() => loadContent(), 1000);
+
+
 
     // console.log(bseditorToolbar);
     var cssIframe = $('.json-text').text();
@@ -160,6 +172,7 @@ function load() {
         if (dataJson['scrypt']) {
             var scryptIframe = dataJson['scrypt'].replace("$", "iframeDocCont.find");
             // console.log(scryptIframe);
+            htmlScrypt = htmlScrypt + dataJson['scrypt'];
             eval(scryptIframe);
         }
         load();
@@ -293,4 +306,17 @@ function randomInteger(min, max) {
     // случайное число от min до (max)
     let rand = min + Math.random() * (max - min);
     return Math.floor(rand);
+}
+
+function returnContent() {
+    $('input.inputContent').val(htmlContent.html());
+    $('input.inputScrypt').val(htmlScrypt);
+}
+
+function loadContent() {
+    let scryptIframeHtml = htmlScrypt
+    scryptIframeHtml = scryptIframeHtml.replace("$('", "iframeDocCont.find('");
+    eval(scryptIframeHtml);
+    resize();
+    load();
 }
