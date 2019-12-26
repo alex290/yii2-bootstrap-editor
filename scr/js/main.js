@@ -38,7 +38,7 @@ var sizeRab = 'Extralarge';
 var frstResize = true;
 
 
-
+var htmlContent = $('<div/>').html($('input.inputContent').val());
 
 jQuery(document).ready(function($) {
 
@@ -89,8 +89,10 @@ jQuery(document).ready(function($) {
     $('.bs4-click-add').on('click', function() {
         var calss = $(this).data('class');
         var html = iframeDocCont.html();
+        let idDiv = 'div-' + randomInteger(100, 99999);
+        htmlContent = htmlContent.append($('<div class="' + calss + '" id = "' + idDiv + '"></div>'));
         // console.log(html);
-        iframeDocCont.html(html + '<div class="' + calss + '"></div>');
+        iframeDocCont.html(htmlContent.html());
         load();
         resize();
     });
@@ -113,9 +115,14 @@ function load() {
     iframeDocCont.find('div').off("click");
     iframeDocCont.find('div').on('click', function(event) {
 
+        let idDiv = $(this).attr('id');
+
+        htmlContent.find('div').removeClass('selected');
         iframeDocCont.find('div').removeClass('selected');
         bseditorToolbar.removeClass('d-none');
         $(this).addClass('selected');
+        htmlContent.find('#' + idDiv).addClass('selected');
+        console.log(htmlContent.html());
         if ($(this).hasClass('container') || $(this).hasClass('row') || $(this).hasClass('container-fluid')) {
             bseditorToolbar.find('.noneCont').addClass('d-none');
         } else {
@@ -273,4 +280,10 @@ function resize() {
         height: heightBody + 'px',
     });
 
+}
+
+function randomInteger(min, max) {
+    // случайное число от min до (max)
+    let rand = min + Math.random() * (max - min);
+    return Math.floor(rand);
 }
