@@ -282,7 +282,7 @@ function posIlteMenu() {
 }
 
 function resize() {
-    var heightBody = iframe.outerHeight();
+    var heightBody = iframe.find('.frame-dashed-wrap').outerHeight();
     $('iframe#html-frame').css({
         height: heightBody + 'px',
     });
