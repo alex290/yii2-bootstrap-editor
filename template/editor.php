@@ -23,7 +23,7 @@ if ($this->costumCssScrypt != null) {
         $scryptArr[] = $valueScrypt;
     }
 }
-
+// debug($this->costumButton);
 $jsonScrypt = Json::encode($scryptArr);
 $jsonCss = Json::encode($cssArr);
 

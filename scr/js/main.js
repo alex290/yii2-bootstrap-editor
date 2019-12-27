@@ -42,6 +42,7 @@ var htmlContent = $('<div/>').html($('input.inputContent').val());
 
 var htmlScrypt = $('input.inputScrypt').val();
 var htmlStyle = $('input.inputStyle').val();
+var vidgets = JSON.parse($('.json-widgetScrypt').text());
 
 jQuery(document).ready(function($) {
 
@@ -50,8 +51,6 @@ jQuery(document).ready(function($) {
         // return false;
     });
     iframeDocCont.html(htmlContent.html());
-
-    setTimeout(() => loadContent(), 1000);
 
 
 
@@ -72,26 +71,16 @@ jQuery(document).ready(function($) {
 
     });
 
-    var styleApand = '';
-    $(JSON.parse(styleIframe)).each(function(index, element) {
-        styleApand = styleApand + element;
-    });
-    styleApand = '<style>' + styleApand + '</style>';
+    var styleApand = '<style>';
 
-    $(JSON.parse(scryptIframe)).each(function(index, element) {
-
-        // console.log(element);
-        iframeDoc.append($("<scrypt/>", {
-            href: element,
-        }));
-
+    $(vidgets).each(function(index, element) {
+        styleApand = styleApand + element['style'];
     });
 
+    styleApand = styleApand + '</style>';
 
-    // console.log(styleApand);
-    // headFrame.append(styleApand);
-    iframe.find('head').append('<style>' + htmlStyle + '</style>');
-    // iframeDocCont.before('<style>' + styleApand + '</style>');
+    headFrame.append(styleApand);
+    setTimeout(() => loadContent(), 1000);
 
 
     $('.container-editor-html').css({
@@ -171,17 +160,12 @@ function load() {
         iframeDocCont.html(htmlContent.html());
 
         // iframeDocCont.find('div.selected').html(html);
-        if (dataJson['scrypt']) {
-            var scryptIframe = dataJson['scrypt'].replace("$", "iframeDocCont.find");
-            // console.log(scryptIframe);
-            htmlScrypt = '// виджет - ' + dataJson['name'] + '\n' + htmlScrypt + dataJson['scrypt'] + '\n//=========================================== \n\n';
+        $(vidgets).each(function(index, element) {
+            // console.log();
+            var scryptIframe = element['scrypt'].replace("$('", "iframeDocCont.find('");
             eval(scryptIframe);
-        }
+        });
 
-        if (dataJson['style']) {
-            htmlStyle = '/* виджет - ' + dataJson['name'] + '*/\n' + htmlStyle + dataJson['style'] + '\n/*=========================================== */\n\n';
-            iframe.find('head').append('<style>' + htmlStyle + '</style>');
-        }
         load();
         resize();
     });
@@ -193,6 +177,7 @@ function load() {
     iframeDoc.on('click', function(e) {
         if (e.target != this) { return true; }
         iframeDocCont.find('div').removeClass('selected');
+        htmlContent.find('div').removeClass('selected');
         bseditorToolbar.addClass('d-none');
     });
 
@@ -200,6 +185,7 @@ function load() {
     $(document).on('click', function(e) {
         iframeDocCont.find('div').removeClass('selected');
         bseditorToolbar.addClass('d-none');
+        htmlContent.find('div').removeClass('selected');
         $('#exampleModalAddDiv').modal('hide');
     });
     /*document.querySelector('.container-editor-html').onclick = function(e) {
@@ -322,9 +308,10 @@ function returnContent() {
 }
 
 function loadContent() {
-    let scryptIframeHtml = htmlScrypt
-    scryptIframeHtml = scryptIframeHtml.replace("$('", "iframeDocCont.find('");
-    eval(scryptIframeHtml);
+    $(vidgets).each(function(index, element) {
+        var scryptIframe = element['scrypt'].replace("$('", "iframeDocCont.find('");
+        eval(scryptIframe);
+    });
     resize();
     load();
 }
