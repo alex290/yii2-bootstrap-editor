@@ -41,6 +41,7 @@ var frstResize = true;
 var htmlContent = $('<div/>').html($('input.inputContent').val());
 
 var htmlScrypt = $('input.inputScrypt').val();
+var htmlStyle = $('input.inputStyle').val();
 
 jQuery(document).ready(function($) {
 
@@ -88,7 +89,8 @@ jQuery(document).ready(function($) {
 
 
     // console.log(styleApand);
-    headFrame.append(styleApand);
+    // headFrame.append(styleApand);
+    iframe.find('head').append('<style>' + htmlStyle + '</style>');
     // iframeDocCont.before('<style>' + styleApand + '</style>');
 
 
@@ -172,8 +174,13 @@ function load() {
         if (dataJson['scrypt']) {
             var scryptIframe = dataJson['scrypt'].replace("$", "iframeDocCont.find");
             // console.log(scryptIframe);
-            htmlScrypt = htmlScrypt + dataJson['scrypt'];
+            htmlScrypt = '// виджет - ' + dataJson['name'] + '\n' + htmlScrypt + dataJson['scrypt'] + '\n//=========================================== \n\n';
             eval(scryptIframe);
+        }
+
+        if (dataJson['style']) {
+            htmlStyle = '/* виджет - ' + dataJson['name'] + '*/\n' + htmlStyle + dataJson['style'] + '\n/*=========================================== */\n\n';
+            iframe.find('head').append('<style>' + htmlStyle + '</style>');
         }
         load();
         resize();
@@ -311,6 +318,7 @@ function randomInteger(min, max) {
 function returnContent() {
     $('input.inputContent').val(htmlContent.html());
     $('input.inputScrypt').val(htmlScrypt);
+    $('input.inputStyle').val(htmlStyle);
 }
 
 function loadContent() {
