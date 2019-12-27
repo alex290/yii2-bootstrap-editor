@@ -1,4 +1,4 @@
-.frame-dashed-wrap div {
+.frame-dashed-wrap div.widgetElement {
     min-height: 20px;
     margin-top: 5px;
     margin-bottom: 5px;
@@ -15,7 +15,7 @@
     transition: all 0.2s linear;
 }
 
-.frame-dashed-wrap div:hover {
+.frame-dashed-wrap div.widgetElement:hover {
     border: 1px #000 solid;
 }
 

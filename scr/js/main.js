@@ -77,6 +77,8 @@ jQuery(document).ready(function($) {
         styleApand = styleApand + element['style'];
     });
 
+    styleApand = styleApand + htmlStyle;
+
     styleApand = styleApand + '</style>';
 
     headFrame.append(styleApand);
