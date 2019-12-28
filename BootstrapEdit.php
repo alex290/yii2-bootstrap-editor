@@ -11,7 +11,7 @@ class BootstrapEdit extends \yii\base\Widget
     public $content;
     public $costumButton = null;
     public $costumCssScrypt = null;
-    public $costumeStyle = null;
+    public $ckeditor = [];
 
     protected $registerCssScrypt;
 

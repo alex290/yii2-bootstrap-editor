@@ -34,17 +34,26 @@ Once the extension is installed, simply use it in your code by  :
 <?= BootstrapEdit::widget(['content' => $content ]) ?>
 ```
 
+
+Поле с классом `inputContent` - загружает Html - Bootstrap 4 верстку
+
+```php
+<textarea id="Content" class="form-control" class="inputContent""></textarea>
+```
+
+
 Дополнительные параметры
 
 Своя кнопка
 -----------
 
 ```php
-$costumButton => [
-    01 => [
+'costumButton' => [
+    [
         'name' => 'Название кнопки',
         'html' => 'HTML код',
         'scrypt' => 'Скрипт активации например слайдер', // Необязательный параметр
+        'style' => 'Стили для конкретного виджета', // Необязательный параметр
     ],
     ...
 ]
@@ -61,7 +70,7 @@ $costumButton => [
 --------------------
 
 ```php
-$costumCssScrypt = [
+'costumCssScrypt' = [
     'css' => [
         "/web/css/slick.css",
     ],
@@ -78,36 +87,39 @@ $costumCssScrypt = [
 <?= BootstrapEdit::widget(['content' => $content, 'costumCssScrypt' => $costumCssScrypt]) ?>
 ```
 
+Редактор CKEDITOR
+-----------------
+
 ```php
-$costumCss = <<<CSS
-.block-content-collect1 {
-    float: left;
-    width: 100%;
-    box-shadow: 0px 3.58109px 3.58109px rgba(0, 0, 0, 0.25);
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
-}
-
-.galery-collection1 {
-    float: left;
-    width: 100%;
-    padding: 0 0 0 0;
-    margin: 0 0 0 0;
-}
-
-.galery-collection1 li {
-    display: block;
-    width: 100%;
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
-    height: 600px;
-}
-CSS;
+'ckeditor' => [
+    'path' => '/web/lib/ckeditor/ckeditor.js',
+    'customConfig': '/web/lib/ckeditor/ckeditor_config.js', // Своя конфигурация - Необязательный параметр
+],
 ```
 
+Дополнительные скрипты и стили
+------------------------------
+
+Можно добавить дополнительные стили с скрипты при помощи полей форм
+
+Поле с классом `inputScrypt` - загружает JavaScrypt
+
 ```php
-<?php
-    use alex290\bootstrapEditor\BootstrapEdit;
-?>
-<?= BootstrapEdit::widget(['content' => $content, 'costumeStyle' => json_encode([$costumCss, ...])]) ?>
+<textarea id="Scrypt" class="form-control" class="inputScrypt""></textarea>
+```
+
+Поле с классом `inputStyle` - загружает сss стили
+
+```php
+<textarea id="Style" class="form-control" class="inputStyle""></textarea>
+```
+
+
+Возврат данных при сохранении
+-----------------------------
+
+Кнопка с классом `onclickReturnContent` - Возвращает во все поля обновленные данные (Верстка, стили и скрипты);
+
+```php
+<button type="submit" class="btn btn-success onclickReturnContent">Сохранить</button>
 ```
