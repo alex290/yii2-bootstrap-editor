@@ -56,8 +56,8 @@ jQuery(document).ready(function($) {
 
     // console.log(bseditorToolbar);
     var cssIframe = $('.json-text').text();
-    var styleIframe = $('.json-style').text();
-    var scryptIframe = $('.json-scrypt').text();
+    // var styleIframe = $('.json-style').text();
+    // var scryptIframe = $('.json-scrypt').text();
     // console.log(scryptIframe);
     var headFrame = iframe.find('head');
     $(JSON.parse(cssIframe)).each(function(index, element) {
@@ -146,6 +146,13 @@ function load() {
         let idDiv = 'div-' + randomInteger(100, 99999);
         htmlContent.find('div.selected').append($('<div class="' + calss + ' widgetElement" id = "' + idDiv + '"></div>'));
         iframeDocCont.html(htmlContent.html());
+
+        $(vidgets).each(function(index, element) {
+            // console.log();
+            var scryptIframe = element['scrypt'].replace("$('", "iframeDocCont.find('");
+            eval(scryptIframe);
+        });
+        
         load();
         resize();
     });
