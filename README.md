@@ -22,6 +22,22 @@ or add
 to the require section of your `composer.json` file.
 
 
+Подключение
+-----------
+
+в файле `web.php` в папке `config`
+
+вставить параметр
+
+```php
+'modules' => [
+    'bs4-editor' => [
+        'class' => 'alex290\bootstrapEditor\Module',
+    ],
+],
+```
+
+
 Usage
 -----
 
@@ -33,6 +49,7 @@ Once the extension is installed, simply use it in your code by  :
 ?>
 <?= BootstrapEdit::widget(['content' => $content ]) ?>
 ```
+
 
 
 Поле с классом `inputContent` - загружает Html - Bootstrap 4 верстку
@@ -123,3 +140,15 @@ Once the extension is installed, simply use it in your code by  :
 ```php
 <button type="submit" class="btn btn-success onclickReturnContent">Сохранить</button>
 ```
+
+
+Парсер CSS стилей
+-----------------
+
+У модуля есть функция парсинга CSS стилей в массив для работы с элементами
+
+```php
+$classNew = CssParser::getJson($css);
+```
+
+в результате мы получаем json массива стилей

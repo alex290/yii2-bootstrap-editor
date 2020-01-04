@@ -8,10 +8,11 @@ class DefaultController extends Controller
 {
     public function actionIndex()
     {
-        if (\Yii::$app->request->isAjax) {
-                        
-        }
-        return TRUE;
-    }
+        $this->layout = false;
 
+        if (\Yii::$app->request->isAjax) {
+
+        }
+        return true;
+    }
 }

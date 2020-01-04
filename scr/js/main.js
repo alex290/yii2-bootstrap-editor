@@ -51,6 +51,7 @@ jQuery(document).ready(function($) {
         // return false;
     });
     iframeDocCont.html(htmlContent.html());
+    paseStyle();
 
 
 

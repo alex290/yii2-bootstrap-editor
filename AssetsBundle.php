@@ -26,6 +26,7 @@ class AssetsBundle extends AssetBundle {
     ];
     public $js = [
         'js/jquery.min.js',
+        'js/parseCss.js',
         'js/main.js',
     ];
     public $depends = [
