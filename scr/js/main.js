@@ -36,7 +36,7 @@ bseditorToolbar = iframeDoc.find('.bseditor-toolbar');
 
 var sizeRab = 'Extralarge';
 var frstResize = true;
-var ArrClass;
+var ArrClass = [];
 
 
 var htmlContent = $('<div/>').html($('input.inputContent').val());
@@ -71,24 +71,25 @@ jQuery(document).ready(function ($) {
     });
 
 
-
-    // paseStyle(htmlStyle).then(function (result) {
-    //     console.log(result);
-    // });
-
-    var styleApand = '';
+    let styleApand = '';
 
     $(vidgets).each(function (index, element) {
         styleApand = styleApand + element['style'];
     });
 
-    Promise.all([paseStyle(htmlStyle), paseStyle(styleApand)]).then(values => {
+    
+    paseStyle(htmlStyle+styleApand).then(values => {
 
+        let arrClassNew = [];
         $(values).each(function (index, element) {
-            ArrClass = this;
+            ArrClass = element;
+            // console.log(element);
+            
         });
 
-        let TecArrClass = ArrClass;
+        // console.log(ArrClass);
+
+        let TecArrClass = ArrClass;    
 
         getStyle(TecArrClass).then(function (value) {
             styleApand = '<style>' + value + '</style>';
@@ -127,12 +128,15 @@ jQuery(document).ready(function ($) {
             width: size[sizeRab]['size'],
         });
         frstResize = false;
+        setTimeout(() => resize(), 1000);
     });
 
 });
 
 
 function load() {
+    resizeColumb();
+    setTimeout(() => resize(), 300);
     // Выделение элементов по клику
     iframeDocCont.find('div.widgetElement').off("click");
     iframeDocCont.find('div.widgetElement').on('click', function (event) {
@@ -144,8 +148,18 @@ function load() {
         bseditorToolbar.removeClass('d-none');
         $(this).addClass('selected');
         htmlContent.find('#' + idDiv).addClass('selected');
-        // console.log(htmlContent.html());
-        if ($(this).hasClass('container') || $(this).hasClass('row') || $(this).hasClass('container-fluid')) {
+        let colClass = false;
+
+        for (let indexColl = 1; indexColl < 13; indexColl++) {
+            if (iframeDocCont.find('div.selected').hasClass('col-'+indexColl)) {
+                colClass = true;
+            }
+            
+        }
+
+        // console.log(colClass);
+
+        if (colClass == false) {
             bseditorToolbar.find('.noneCont').addClass('d-none');
         } else {
             bseditorToolbar.find('.noneCont').removeClass('d-none');
@@ -171,7 +185,7 @@ function load() {
         });
 
         load();
-        resize();
+        
     });
     // --------------------------------------------------
 
@@ -193,7 +207,7 @@ function load() {
         });
 
         load();
-        setTimeout(() => resize(), 300);
+        
 
     });
     // --------------------------------------------------
@@ -221,72 +235,7 @@ function load() {
     };*/
     // --------------------------------------------------------
 
-    // Увеличение колонки
-    bseditorToolbar.find('.clickPlusCol').off("click");
-    bseditorToolbar.find('.clickPlusCol').on('click', function () {
-        var classDiv = iframeDocCont.find('div.selected').attr('class').split(/\s+/);
-        $(classDiv).each(function (index, element) {
-
-            if (element.search('col') != -1) {
-                var classTeml = element;
-                var classNewArr = element.split('-');
-                var classNewSize;
-                var summ = Number(classNewArr[classNewArr.length - 1]);
-                if (element.search(size[sizeRab]['class']) == -1) {
-                    classNewSize = size[sizeRab]['class'] + '-' + summ;
-                } else {
-                    classNewArr = element.split(size[sizeRab]['class']);
-                    var str = classNewArr[classNewArr.length - 1];
-                    summ = Number(str.replace('-', ''));
-                }
-                // console.log(summ);
-                var newSumm;
-                if (summ < 12) {
-                    newSumm = summ + 1;
-                    iframeDocCont.find('div.selected').removeClass(size[sizeRab]['class'] + '-' + summ);
-                    // $('div.selected').addClass(classNew);
-                    iframeDocCont.find('div.selected').addClass(size[sizeRab]['class'] + '-' + newSumm);
-                    posIlteMenu();
-                }
-
-            }
-        });
-        resize();
-
-    });
-    // ---------------------------------------------------------
-
-    // Уменьшение колонки
-    bseditorToolbar.find('.clickMinusCol').off("click");
-    bseditorToolbar.find('.clickMinusCol').on('click', function () {
-        var classDiv = iframeDocCont.find('div.selected').attr('class').split(/\s+/);
-        $(classDiv).each(function (index, element) {
-
-            if (element.search('col') != -1) {
-                var classTeml = element;
-                var classNewArr = element.split('-');
-                var classNew;
-                if (classNewArr[classNewArr.length - 1] > 1) {
-                    classNewArr[classNewArr.length - 1] = Number(classNewArr[classNewArr.length - 1]) - 1;
-                    $(classNewArr).each(function (index, element) {
-                        if (index == 0) {
-                            classNew = element;
-                        } else {
-                            classNew = classNew + '-' + element;
-                        }
-                    });
-                    iframeDocCont.find('div.selected').removeClass(classTeml);
-                    iframeDocCont.find('div.selected').addClass(classNew);
-                    posIlteMenu();
-                }
-
-
-            }
-        });
-        resize();
-
-    });
-    // ---------------------------------------------------------
+   
 
 
     bseditorToolbar.find('.click-remove-obj').on('click', function () {
@@ -339,6 +288,5 @@ function loadContent() {
         var scryptIframe = element['scrypt'].replace("$('", "iframeDocCont.find('");
         eval(scryptIframe);
     });
-    resize();
     load();
 }

@@ -28,6 +28,7 @@ class AssetsBundle extends AssetBundle {
         'js/jquery.min.js',
         'js/parseCss.js',
         'js/main.js',
+        'js/columb.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
