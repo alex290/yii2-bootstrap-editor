@@ -27,7 +27,7 @@ class CssParser
                         foreach ($matchTwo[1] as $key => $valueTwoArra) {
                             preg_match_all($reg, $matchTwo[2][$key], $content);
                             $result = array_combine($content[1], $content[2]);
-                            $classNew[str_replace("}", '', $valueArra)] = [trim($valueTwoArra) => $result];
+                            $classNew[str_replace("}", '', $valueArra)]['children'] = [trim($valueTwoArra) => $result];
                         }
                     }
                 } else {

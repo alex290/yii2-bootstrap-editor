@@ -36,6 +36,7 @@ bseditorToolbar = iframeDoc.find('.bseditor-toolbar');
 
 var sizeRab = 'Extralarge';
 var frstResize = true;
+var ArrClass;
 
 
 var htmlContent = $('<div/>').html($('input.inputContent').val());
@@ -44,16 +45,13 @@ var htmlScrypt = $('input.inputScrypt').val();
 var htmlStyle = $('input.inputStyle').val();
 var vidgets = JSON.parse($('.json-widgetScrypt').text());
 
-jQuery(document).ready(function($) {
+jQuery(document).ready(function ($) {
 
-    $('.onclickReturnContent').on('click', function() {
+    $('.onclickReturnContent').on('click', function () {
         returnContent();
         // return false;
     });
     iframeDocCont.html(htmlContent.html());
-    paseStyle();
-
-
 
     // console.log(bseditorToolbar);
     var cssIframe = $('.json-text').text();
@@ -61,7 +59,7 @@ jQuery(document).ready(function($) {
     // var scryptIframe = $('.json-scrypt').text();
     // console.log(scryptIframe);
     var headFrame = iframe.find('head');
-    $(JSON.parse(cssIframe)).each(function(index, element) {
+    $(JSON.parse(cssIframe)).each(function (index, element) {
 
         // console.log(element);
         headFrame.append($("<link/>", {
@@ -72,17 +70,35 @@ jQuery(document).ready(function($) {
 
     });
 
-    var styleApand = '<style>';
 
-    $(vidgets).each(function(index, element) {
+
+    // paseStyle(htmlStyle).then(function (result) {
+    //     console.log(result);
+    // });
+
+    var styleApand = '';
+
+    $(vidgets).each(function (index, element) {
         styleApand = styleApand + element['style'];
     });
 
-    styleApand = styleApand + htmlStyle;
+    Promise.all([paseStyle(htmlStyle), paseStyle(styleApand)]).then(values => {
 
-    styleApand = styleApand + '</style>';
+        $(values).each(function (index, element) {
+            ArrClass = this;
+        });
 
-    headFrame.append(styleApand);
+        let TecArrClass = ArrClass;
+
+        getStyle(TecArrClass).then(function (value) {
+            styleApand = '<style>' + value + '</style>';
+            headFrame.append(styleApand);
+        });
+    })
+
+
+
+    // headFrame.append(styleApand);
     setTimeout(() => loadContent(), 1000);
 
 
@@ -92,7 +108,7 @@ jQuery(document).ready(function($) {
 
 
 
-    $('.bs4-click-add').on('click', function() {
+    $('.bs4-click-add').on('click', function () {
         var calss = $(this).data('class');
         var html = iframeDocCont.html();
         let idDiv = 'div-' + randomInteger(100, 99999);
@@ -105,7 +121,7 @@ jQuery(document).ready(function($) {
 
     // ;
 
-    $('ul.resolutionBs4Widget li').on('click', function() {
+    $('ul.resolutionBs4Widget li').on('click', function () {
         sizeRab = $(this).data('size');
         $('.container-editor-html').css({
             width: size[sizeRab]['size'],
@@ -119,7 +135,7 @@ jQuery(document).ready(function($) {
 function load() {
     // Выделение элементов по клику
     iframeDocCont.find('div.widgetElement').off("click");
-    iframeDocCont.find('div.widgetElement').on('click', function(event) {
+    iframeDocCont.find('div.widgetElement').on('click', function (event) {
 
         let idDiv = $(this).attr('id');
 
@@ -141,19 +157,19 @@ function load() {
 
     // Добавление дочерних эелементов
     $('.clickAddInner').off("click");
-    $('.clickAddInner').on('click', function() {
+    $('.clickAddInner').on('click', function () {
         var calss = $(this).data('class');
 
         let idDiv = 'div-' + randomInteger(100, 99999);
         htmlContent.find('div.selected').append($('<div class="' + calss + ' widgetElement" id = "' + idDiv + '"></div>'));
         iframeDocCont.html(htmlContent.html());
 
-        $(vidgets).each(function(index, element) {
+        $(vidgets).each(function (index, element) {
             // console.log();
             var scryptIframe = element['scrypt'].replace("$('", "iframeDocCont.find('");
             eval(scryptIframe);
         });
-        
+
         load();
         resize();
     });
@@ -161,7 +177,7 @@ function load() {
 
     // Добавление своих дочерних эелементов
     $('.clickAddCostum').off("click");
-    $('.clickAddCostum').on('click', function() {
+    $('.clickAddCostum').on('click', function () {
         var dataJson = $(this).data('html');
         var html = dataJson['html'];
 
@@ -170,7 +186,7 @@ function load() {
         iframeDocCont.html(htmlContent.html());
 
         // iframeDocCont.find('div.selected').html(html);
-        $(vidgets).each(function(index, element) {
+        $(vidgets).each(function (index, element) {
             // console.log();
             var scryptIframe = element['scrypt'].replace("$('", "iframeDocCont.find('");
             eval(scryptIframe);
@@ -178,14 +194,14 @@ function load() {
 
         load();
         setTimeout(() => resize(), 300);
-        
+
     });
     // --------------------------------------------------
 
     // Удаление выделения
 
     iframeDoc.off("click");
-    iframeDoc.on('click', function(e) {
+    iframeDoc.on('click', function (e) {
         if (e.target != this) { return true; }
         iframeDocCont.find('div').removeClass('selected');
         htmlContent.find('div').removeClass('selected');
@@ -193,7 +209,7 @@ function load() {
     });
 
     $(document).off("click");
-    $(document).on('click', function(e) {
+    $(document).on('click', function (e) {
         iframeDocCont.find('div').removeClass('selected');
         bseditorToolbar.addClass('d-none');
         htmlContent.find('div').removeClass('selected');
@@ -207,9 +223,9 @@ function load() {
 
     // Увеличение колонки
     bseditorToolbar.find('.clickPlusCol').off("click");
-    bseditorToolbar.find('.clickPlusCol').on('click', function() {
+    bseditorToolbar.find('.clickPlusCol').on('click', function () {
         var classDiv = iframeDocCont.find('div.selected').attr('class').split(/\s+/);
-        $(classDiv).each(function(index, element) {
+        $(classDiv).each(function (index, element) {
 
             if (element.search('col') != -1) {
                 var classTeml = element;
@@ -242,9 +258,9 @@ function load() {
 
     // Уменьшение колонки
     bseditorToolbar.find('.clickMinusCol').off("click");
-    bseditorToolbar.find('.clickMinusCol').on('click', function() {
+    bseditorToolbar.find('.clickMinusCol').on('click', function () {
         var classDiv = iframeDocCont.find('div.selected').attr('class').split(/\s+/);
-        $(classDiv).each(function(index, element) {
+        $(classDiv).each(function (index, element) {
 
             if (element.search('col') != -1) {
                 var classTeml = element;
@@ -252,7 +268,7 @@ function load() {
                 var classNew;
                 if (classNewArr[classNewArr.length - 1] > 1) {
                     classNewArr[classNewArr.length - 1] = Number(classNewArr[classNewArr.length - 1]) - 1;
-                    $(classNewArr).each(function(index, element) {
+                    $(classNewArr).each(function (index, element) {
                         if (index == 0) {
                             classNew = element;
                         } else {
@@ -273,18 +289,18 @@ function load() {
     // ---------------------------------------------------------
 
 
-    bseditorToolbar.find('.click-remove-obj').on('click', function() {
+    bseditorToolbar.find('.click-remove-obj').on('click', function () {
         htmlContent.find('div.selected').remove();
         iframeDocCont.find('div.selected').remove();
         bseditorToolbar.addClass('d-none');
         resize();
     });
 
-    bseditorToolbar.find('.clickAddDiv').on('click', function() {
+    bseditorToolbar.find('.clickAddDiv').on('click', function () {
         $('#exampleModalAddDiv').modal('show');
     });
 
-    bseditorToolbar.find('.clickSetting').on('click', function() {
+    bseditorToolbar.find('.clickSetting').on('click', function () {
         $('#exampleModalSetting').modal('show');
     });
 
@@ -319,7 +335,7 @@ function returnContent() {
 }
 
 function loadContent() {
-    $(vidgets).each(function(index, element) {
+    $(vidgets).each(function (index, element) {
         var scryptIframe = element['scrypt'].replace("$('", "iframeDocCont.find('");
         eval(scryptIframe);
     });
