@@ -37,6 +37,7 @@ bseditorToolbar = iframeDoc.find('.bseditor-toolbar');
 var sizeRab = 'Extralarge';
 var frstResize = true;
 var ArrClass = [];
+var inputStyleObj = {};
 
 
 var htmlContent = $('<div/>').html($('input.inputContent').val());
@@ -58,7 +59,7 @@ jQuery(document).ready(function ($) {
     // var styleIframe = $('.json-style').text();
     // var scryptIframe = $('.json-scrypt').text();
     // console.log(scryptIframe);
-    var headFrame = iframe.find('head');
+    let headFrame = iframe.find('head');
     $(JSON.parse(cssIframe)).each(function (index, element) {
 
         // console.log(element);
@@ -77,24 +78,17 @@ jQuery(document).ready(function ($) {
         styleApand = styleApand + element['style'];
     });
 
-    
-    paseStyle(htmlStyle+styleApand).then(values => {
+    Promise.all([paseStyle(htmlStyle), paseStyle(styleApand)]).then(valThis => {
+        reloadSstyle(valThis);
+    });
+    paseStyle(htmlStyle).then(values => {
+        inputStyleObj = values;
+        // console.log(inputStyleObj);
+    })
 
-        let arrClassNew = [];
-        $(values).each(function (index, element) {
-            ArrClass = element;
-            // console.log(element);
-            
-        });
-
+    paseStyle(styleApand).then(values => {
+        ArrClass = values;
         // console.log(ArrClass);
-
-        let TecArrClass = ArrClass;    
-
-        getStyle(TecArrClass).then(function (value) {
-            styleApand = '<style>' + value + '</style>';
-            headFrame.append(styleApand);
-        });
     })
 
 
@@ -136,6 +130,7 @@ jQuery(document).ready(function ($) {
 
 function load() {
     resizeColumb();
+    settingModalShow();
     setTimeout(() => resize(), 300);
     // Выделение элементов по клику
     iframeDocCont.find('div.widgetElement').off("click");
@@ -151,10 +146,10 @@ function load() {
         let colClass = false;
 
         for (let indexColl = 1; indexColl < 13; indexColl++) {
-            if (iframeDocCont.find('div.selected').hasClass('col-'+indexColl)) {
+            if (iframeDocCont.find('div.selected').hasClass('col-' + indexColl)) {
                 colClass = true;
             }
-            
+
         }
 
         // console.log(colClass);
@@ -185,7 +180,7 @@ function load() {
         });
 
         load();
-        
+
     });
     // --------------------------------------------------
 
@@ -207,7 +202,7 @@ function load() {
         });
 
         load();
-        
+
 
     });
     // --------------------------------------------------
@@ -235,7 +230,7 @@ function load() {
     };*/
     // --------------------------------------------------------
 
-   
+
 
 
     bseditorToolbar.find('.click-remove-obj').on('click', function () {
@@ -247,10 +242,6 @@ function load() {
 
     bseditorToolbar.find('.clickAddDiv').on('click', function () {
         $('#exampleModalAddDiv').modal('show');
-    });
-
-    bseditorToolbar.find('.clickSetting').on('click', function () {
-        $('#exampleModalSetting').modal('show');
     });
 
 }

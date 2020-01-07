@@ -29,6 +29,7 @@ class AssetsBundle extends AssetBundle {
         'js/parseCss.js',
         'js/main.js',
         'js/columb.js',
+        'js/setting.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
