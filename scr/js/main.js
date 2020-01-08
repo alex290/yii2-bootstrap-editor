@@ -62,6 +62,9 @@ jQuery(document).ready(function ($) {
     // var scryptIframe = $('.json-scrypt').text();
     // console.log(scryptIframe);
     let headFrame = iframe.find('head');
+
+    headFrame.append('<meta name="viewport" content="width=device-width, initial-scale=1"></meta>');
+    
     $(JSON.parse(cssIframe)).each(function (index, element) {
 
         // console.log(element);

@@ -11,7 +11,7 @@ class CssParserController extends Controller
     public function actionIndex()
     {
         $this->layout = false;
-        $dataGet = \Yii::$app->request->get('css');
+        $dataGet = \Yii::$app->request->post('css');
         $classNew = CssParser::getArr($dataGet);
         return Json::encode($classNew);
     }
@@ -19,7 +19,7 @@ class CssParserController extends Controller
     public function actionGetStyle()
     {
         $this->layout = false;
-        $dataGet = Json::decode(\Yii::$app->request->get('css'));
+        $dataGet = Json::decode(\Yii::$app->request->post('css'));
         return CssParser::getClass($dataGet);
     }
 }
