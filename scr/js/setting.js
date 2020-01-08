@@ -5,6 +5,9 @@ function settingModalShow() {
     bseditorToolbar.find('.clickSetting').on('click', function () {
         let idDiv = iframeDocCont.find('div.selected').attr('id');
         settingId = idDiv;
+
+
+
         $('.zaglTicleModalSetting').text("#" + idDiv);
 
         let classesDiv = htmlContent.find('#' + idDiv);
@@ -12,45 +15,73 @@ function settingModalShow() {
         let valClass = classesDiv.attr('class').replace('selected', '');
         $('.classesModalSetting').val(valClass);
 
-        $('button.applyModalSetting').off("click");
-        $('button.applyModalSetting').on('click', function () {
-            let inputModalSet = {
-                'sizeRab': sizeRab,
-                'id': idDiv,
-                'classes': valClass,
-                'margin-top': $('.marginTopModalSetting').val(),
-                'margin-bottom': $('.marginBottomModalSetting').val(),
-                'margin-left': $('.marginLeftModalSetting').val(),
-                'margin-right': $('.marginRightModalSetting').val(),
-                'height': $('.heightModalSetting').val(),
-                'width': $('.widthModalSetting').val(),
-            };
+        var inputModalSet = {
+            'sizeRab': sizeRab,
+            'id': idDiv,
+        };
 
-            setModalSetting(inputModalSet).then(valGetClass => {
-                inputStyleObj = JSON.parse(valGetClass);
-                // console.log(inputStyleObj);
-                let array1 = inputStyleObj;
-                let array2 = ArrClass;
-                let array3 = Object.assign(array1, array2);
+        getModalSetting(inputModalSet).then(valSetClass => {
+            if (!(valSetClass == null || valSetClass == '')) {
+                let getModClass = JSON.parse(valSetClass);
+                $('.marginTopModalSetting').val(getModClass['margin-top']);
+                $('.marginBottomModalSetting').val(getModClass['margin-bottom']);
+                $('.marginLeftModalSetting').val(getModClass['margin-left']);
+                $('.marginRightModalSetting').val(getModClass['margin-right']);
+                $('.heightModalSetting').val(getModClass['height']);
+                $('.widthModalSetting').val(getModClass['width']);
+                console.log(getModClass);
+            } else {
+                $('.marginTopModalSetting').val(null);
+                $('.marginBottomModalSetting').val(null);
+                $('.marginLeftModalSetting').val(null);
+                $('.marginRightModalSetting').val(null);
+                $('.heightModalSetting').val(null);
+                $('.widthModalSetting').val(null);
+            }
 
-                getStyle(inputStyleObj).then(valueStyleThenn => {
-                    console.log(valueStyleThenn);
-                    $('.inputStyle').text(valueStyleThenn);
+            $('button.applyModalSetting').off("click");
+            $('button.applyModalSetting').on('click', function () {
+                inputModalSet = {
+                    'sizeRab': sizeRab,
+                    'id': idDiv,
+                    'classes': valClass,
+                    'margin-top': $('.marginTopModalSetting').val(),
+                    'margin-bottom': $('.marginBottomModalSetting').val(),
+                    'margin-left': $('.marginLeftModalSetting').val(),
+                    'margin-right': $('.marginRightModalSetting').val(),
+                    'height': $('.heightModalSetting').val(),
+                    'width': $('.widthModalSetting').val(),
+                };
+
+                setModalSetting(inputModalSet).then(valGetClass => {
+                    inputStyleObj =  valGetClass;
+
+                    $('.inputStyle').text(inputStyleObj);
+
+                    reloadSstyle();
                 });
-
-
-                reloadSstyle(array3);
             });
+
+            $('#exampleModalSetting').modal('show');
         });
 
-        $('#exampleModalSetting').modal('show');
+
     });
 
 }
 
 
-function getModalSetting() {
-
+function getModalSetting(classModal) {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            type: "GET",
+            url: "/bs4-editor/config/modal-get",
+            data: { 'classModal': JSON.stringify(classModal), 'inputClass': inputStyleObj },
+            success: function (response) {
+                resolve(response);
+            }
+        });
+    })
 }
 
 
@@ -67,19 +98,15 @@ function setModalSetting(classModal) {
     })
 }
 
-function reloadSstyle(allClasses) {
-    let arrClassNew = {};
-    $(allClasses).each(function (index, element) {
-        const array3 = Object.assign(arrClassNew, element);
-        arrClassNew = array3;
-    });
+function reloadSstyle() {
 
     let headFrame = iframe.find('head');
 
     headFrame.find('style').remove();
 
-    getStyle(arrClassNew).then(function (value) {
-        styleApand = '<style>' + value + '</style>';
-        headFrame.append(styleApand);
-    });
+    let styleApand = '<style>' + ArrClass + inputStyleObj + '</style>';
+
+    headFrame.append(styleApand);
+
 }
+

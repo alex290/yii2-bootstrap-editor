@@ -36,14 +36,16 @@ bseditorToolbar = iframeDoc.find('.bseditor-toolbar');
 
 var sizeRab = 'Extralarge';
 var frstResize = true;
-var ArrClass = [];
-var inputStyleObj = {};
+var ArrClass;
+var inputStyleObj;
+
+var jqueryPatch = $('.jqueryPatch').text();
 
 
 var htmlContent = $('<div/>').html($('input.inputContent').val());
 
-var htmlScrypt = $('input.inputScrypt').val();
-var htmlStyle = $('input.inputStyle').val();
+var htmlScrypt = $('.inputScrypt').text();
+var htmlStyle = $('.inputStyle').text();
 var vidgets = JSON.parse($('.json-widgetScrypt').text());
 
 jQuery(document).ready(function ($) {
@@ -78,20 +80,16 @@ jQuery(document).ready(function ($) {
         styleApand = styleApand + element['style'];
     });
 
+    ArrClass = styleApand;
+
     Promise.all([paseStyle(htmlStyle), paseStyle(styleApand)]).then(valThis => {
-        reloadSstyle(valThis);
+        Promise.all([getStyle(valThis[0]), getStyle(valThis[1])]).then(classGet => {
+            ArrClass = classGet[1];
+            inputStyleObj = classGet[0];
+            reloadSstyle();
+        });
+
     });
-    paseStyle(htmlStyle).then(values => {
-        inputStyleObj = values;
-        // console.log(inputStyleObj);
-    })
-
-    paseStyle(styleApand).then(values => {
-        ArrClass = values;
-        // console.log(ArrClass);
-    })
-
-
 
     // headFrame.append(styleApand);
     setTimeout(() => loadContent(), 1000);
@@ -198,6 +196,7 @@ function load() {
         $(vidgets).each(function (index, element) {
             // console.log();
             var scryptIframe = element['scrypt'].replace("$('", "iframeDocCont.find('");
+            
             eval(scryptIframe);
         });
 
@@ -274,10 +273,4 @@ function returnContent() {
     $('input.inputStyle').val(htmlStyle);
 }
 
-function loadContent() {
-    $(vidgets).each(function (index, element) {
-        var scryptIframe = element['scrypt'].replace("$('", "iframeDocCont.find('");
-        eval(scryptIframe);
-    });
-    load();
-}
+

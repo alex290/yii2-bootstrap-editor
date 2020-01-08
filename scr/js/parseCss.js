@@ -13,12 +13,12 @@ function paseStyle(cssClass) {
     })
 }
 
-function getStyle(arrClass) {
+function getStyle(arrClassTempl) {
     return new Promise((resolve, reject) => {
         $.ajax({
             type: "GET",
             url: "/bs4-editor/css-parser/get-style",
-            data: { 'css': JSON.stringify(arrClass) },
+            data: { 'css': JSON.stringify(arrClassTempl) },
             success: function (response) {
                 resolve(response);
             }
