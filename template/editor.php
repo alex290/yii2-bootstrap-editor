@@ -38,6 +38,7 @@ $jsonCss = Json::encode($cssArr);
             <?= Html::submitButton('<i class="fas fa-plus"></i> add Container Fluid', ['class' => 'bs4-click-add btn btn-outline-dark', 'data-class' => 'container-fluid']) ?>
             <?= Html::submitButton('<i class="fas fa-plus"></i> add Container', ['class' => 'bs4-click-add btn btn-outline-dark', 'data-class' => 'container']) ?>
         </div>
+        <i class="fas fa-sync clickReloadFrame"></i>
         <div class="remote">
             <ul class="resolutionBs4Widget d-flex">
                 <li data-size="Extralarge" title="Extra large"><i class="fas fa-tv fa-2x"></i></li>

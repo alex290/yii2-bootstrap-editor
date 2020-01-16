@@ -67,3 +67,6 @@ ul.resolutionBs4Widg {
     display: none;
 }
 
+.clickReloadFrame {
+    cursor: pointer;
+}

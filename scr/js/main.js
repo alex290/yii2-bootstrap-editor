@@ -48,9 +48,9 @@ var htmlScrypt = $('.inputScrypt').text();
 var htmlStyle = $('.inputStyle').text();
 var vidgets = JSON.parse($('.json-widgetScrypt').text());
 
-jQuery(document).ready(function ($) {
+jQuery(document).ready(function($) {
 
-    $('.onclickReturnContent').on('click', function () {
+    $('.onclickReturnContent').on('click', function() {
         returnContent();
         // return false;
     });
@@ -64,8 +64,8 @@ jQuery(document).ready(function ($) {
     let headFrame = iframe.find('head');
 
     headFrame.append('<meta name="viewport" content="width=device-width, initial-scale=1"></meta>');
-    
-    $(JSON.parse(cssIframe)).each(function (index, element) {
+
+    $(JSON.parse(cssIframe)).each(function(index, element) {
 
         // console.log(element);
         headFrame.append($("<link/>", {
@@ -79,7 +79,7 @@ jQuery(document).ready(function ($) {
 
     let styleApand = '';
 
-    $(vidgets).each(function (index, element) {
+    $(vidgets).each(function(index, element) {
         styleApand = styleApand + element['style'];
     });
 
@@ -104,7 +104,7 @@ jQuery(document).ready(function ($) {
 
 
 
-    $('.bs4-click-add').on('click', function () {
+    $('.bs4-click-add').on('click', function() {
         var calss = $(this).data('class');
         var html = iframeDocCont.html();
         let idDiv = 'div-' + randomInteger(100, 99999);
@@ -117,7 +117,7 @@ jQuery(document).ready(function ($) {
 
     // ;
 
-    $('ul.resolutionBs4Widget li').on('click', function () {
+    $('ul.resolutionBs4Widget li').on('click', function() {
         sizeRab = $(this).data('size');
         $('.container-editor-html').css({
             width: size[sizeRab]['size'],
@@ -135,7 +135,7 @@ function load() {
     setTimeout(() => resize(), 300);
     // Выделение элементов по клику
     iframeDocCont.find('div.widgetElement').off("click");
-    iframeDocCont.find('div.widgetElement').on('click', function (event) {
+    iframeDocCont.find('div.widgetElement').on('click', function(event) {
 
         let idDiv = $(this).attr('id');
 
@@ -167,14 +167,14 @@ function load() {
 
     // Добавление дочерних эелементов
     $('.clickAddInner').off("click");
-    $('.clickAddInner').on('click', function () {
+    $('.clickAddInner').on('click', function() {
         var calss = $(this).data('class');
 
         let idDiv = 'div-' + randomInteger(100, 99999);
         htmlContent.find('div.selected').append($('<div class="' + calss + ' widgetElement" id = "' + idDiv + '"></div>'));
         iframeDocCont.html(htmlContent.html());
 
-        $(vidgets).each(function (index, element) {
+        $(vidgets).each(function(index, element) {
             // console.log();
             var scryptIframe = element['scrypt'].replace("$('", "iframeDocCont.find('");
             eval(scryptIframe);
@@ -185,9 +185,16 @@ function load() {
     });
     // --------------------------------------------------
 
+    // Обновление страницы
+    $('.clickReloadFrame').off("click");
+    $('.clickReloadFrame').on('click', function() {
+        resize();
+    });
+    // --------------------------------------------------
+
     // Добавление своих дочерних эелементов
     $('.clickAddCostum').off("click");
-    $('.clickAddCostum').on('click', function () {
+    $('.clickAddCostum').on('click', function() {
         var dataJson = $(this).data('html');
         var html = dataJson['html'];
 
@@ -196,10 +203,10 @@ function load() {
         iframeDocCont.html(htmlContent.html());
 
         // iframeDocCont.find('div.selected').html(html);
-        $(vidgets).each(function (index, element) {
+        $(vidgets).each(function(index, element) {
             // console.log();
             var scryptIframe = element['scrypt'].replace("$('", "iframeDocCont.find('");
-            
+
             eval(scryptIframe);
         });
 
@@ -212,7 +219,7 @@ function load() {
     // Удаление выделения
 
     iframeDoc.off("click");
-    iframeDoc.on('click', function (e) {
+    iframeDoc.on('click', function(e) {
         if (e.target != this) { return true; }
         iframeDocCont.find('div').removeClass('selected');
         htmlContent.find('div').removeClass('selected');
@@ -220,7 +227,7 @@ function load() {
     });
 
     $(document).off("click");
-    $(document).on('click', function (e) {
+    $(document).on('click', function(e) {
         iframeDocCont.find('div').removeClass('selected');
         bseditorToolbar.addClass('d-none');
         htmlContent.find('div').removeClass('selected');
@@ -235,14 +242,14 @@ function load() {
 
 
 
-    bseditorToolbar.find('.click-remove-obj').on('click', function () {
+    bseditorToolbar.find('.click-remove-obj').on('click', function() {
         htmlContent.find('div.selected').remove();
         iframeDocCont.find('div.selected').remove();
         bseditorToolbar.addClass('d-none');
         resize();
     });
 
-    bseditorToolbar.find('.clickAddDiv').on('click', function () {
+    bseditorToolbar.find('.clickAddDiv').on('click', function() {
         $('#exampleModalAddDiv').modal('show');
     });
 
@@ -275,5 +282,3 @@ function returnContent() {
     $('input.inputScrypt').val(htmlScrypt);
     $('input.inputStyle').val(htmlStyle);
 }
-
-
