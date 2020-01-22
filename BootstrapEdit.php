@@ -2,6 +2,8 @@
 
 namespace alex290\bootstrapEditor;
 
+use Yii;
+
 /**
  * This is just an example.
  */
@@ -19,6 +21,7 @@ class BootstrapEdit extends \yii\base\Widget
     {
         $this->registerCssScrypt = AssetsBundle::register($this->view);
         // debug($this->costumeStyle);
+        Yii::$app->params['costumButtonBs4'] = $this->costumButton;
         return $this->toTemplate($this->content);
     }
 

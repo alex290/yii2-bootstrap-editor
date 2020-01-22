@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\Json;
+use yii\helpers\Url;
 
 $cssArr = [];
 $jsArr = [];
@@ -19,11 +20,13 @@ if ($this->costumCssScrypt != null) {
     }
 
     foreach ($this->costumCssScrypt['js'] as $valueScrypt) {
-        
+
         $scryptArr[] = $valueScrypt;
     }
 }
-// debug($this->costumButton);
+$costumButton = Json::encode($this->costumButton);
+
+
 $jsonScrypt = Json::encode($scryptArr);
 $jsonCss = Json::encode($cssArr);
 
@@ -31,7 +34,7 @@ $jsonCss = Json::encode($cssArr);
 <div class="json-text"><?= $jsonCss ?></div>
 <div class="json-js d-none"><?= $jsArr[0] ?></div>
 <div class="json-scrypt d-none"><?= $jsonScrypt ?></div>
-<div class="json-widgetScrypt d-none"><?= Json::encode($this->costumButton) ?></div>
+<?= Html::textarea('json-widgetScrypt', Json::encode($this->costumButton), ['class'=>'form-control json-widgetScrypt d-none'] ) ?>
 <div class="card border border-info w-100 bg-dark">
     <div class="card-header d-flex justify-content-between bg-light">
         <div class="addButton">
@@ -51,7 +54,7 @@ $jsonCss = Json::encode($cssArr);
     </div>
     <div class="card-body d-flex justify-content-center">
         <div class="container-editor-html bg-light" data-select="none" data-style="<?= $jsonCss ?>">
-            <iframe allowfullscreen="allowfullscreen" id="html-frame" width="100%" scrolling="no"></iframe>
+            <iframe allowfullscreen="allowfullscreen" id="html-frame" style="width: 100%" scrolling="no"></iframe>
         </div>
     </div>
 </div>
