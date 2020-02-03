@@ -1,9 +1,8 @@
-
 function settingModalShow() {
     var settingId = null;
     bseditorToolbar.find('.clickSetting').off("click");
-    bseditorToolbar.find('.clickSetting').on('click', function () {
-        let idDiv = iframeDocCont.find('div.selected').attr('id');
+    bseditorToolbar.find('.clickSetting').on('click', function() {
+        var idDiv = iframeDocCont.find('div.selected').attr('id');
         settingId = idDiv;
 
 
@@ -12,7 +11,7 @@ function settingModalShow() {
 
         let classesDiv = htmlContent.find('#' + idDiv);
 
-        let valClass = classesDiv.attr('class').replace('selected', '');
+        var valClass = classesDiv.attr('class').replace('selected', '');
         $('.classesModalSetting').val(valClass);
 
         var inputModalSet = {
@@ -40,7 +39,7 @@ function settingModalShow() {
             }
 
             $('button.applyModalSetting').off("click");
-            $('button.applyModalSetting').on('click', function () {
+            $('button.applyModalSetting').on('click', function() {
                 inputModalSet = {
                     'sizeRab': sizeRab,
                     'id': idDiv,
@@ -53,8 +52,18 @@ function settingModalShow() {
                     'width': $('.widthModalSetting').val(),
                 };
 
+                var newDivClass = $('.classesModalSetting').val();
+
+                if (valClass != newDivClass) {
+                    htmlContent.find('#' + idDiv).removeClass(valClass).addClass(newDivClass);
+                    iframeDocCont.find('#' + idDiv).removeClass(valClass).addClass(newDivClass);
+
+                }
+
+
+
                 setModalSetting(inputModalSet).then(valGetClass => {
-                    inputStyleObj =  valGetClass;
+                    inputStyleObj = valGetClass;
 
                     $('.inputStyle').text(inputStyleObj);
 
@@ -77,7 +86,7 @@ function getModalSetting(classModal) {
             type: "GET",
             url: "/bs4-editor/config/modal-get",
             data: { 'classModal': JSON.stringify(classModal), 'inputClass': inputStyleObj },
-            success: function (response) {
+            success: function(response) {
                 resolve(response);
             }
         });
@@ -91,7 +100,7 @@ function setModalSetting(classModal) {
             type: "GET",
             url: "/bs4-editor/config/modal-set",
             data: { 'classModal': JSON.stringify(classModal), 'inputClass': JSON.stringify(inputStyleObj) },
-            success: function (response) {
+            success: function(response) {
                 resolve(response);
             }
         });
@@ -109,4 +118,3 @@ function reloadSstyle() {
     headFrame.append(styleApand);
 
 }
-
