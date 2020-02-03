@@ -1,6 +1,6 @@
 function loadContent() {
     let scryptIframe = [];
-    $(vidgets).each(function (index, element) {
+    $(vidgets).each(function(index, element) {
         // let scryptIframe = element['scrypt'].replace("$('", "iframeDocCont.find('");
         scryptIframe[index] = element['scrypt'];
     });
@@ -25,7 +25,7 @@ function scryptFrame(scryptTeml) {
             type: "GET",
             url: "/bs4-editor/config/scrypt-frame",
             data: { 'scrypt': JSON.stringify(scryptTeml) },
-            success: function (response) {
+            success: function(response) {
                 resolve(response);
             }
         });

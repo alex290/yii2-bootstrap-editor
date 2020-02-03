@@ -60,8 +60,6 @@ function settingModalShow() {
 
                 }
 
-
-
                 setModalSetting(inputModalSet).then(valGetClass => {
                     inputStyleObj = valGetClass;
 
