@@ -203,7 +203,7 @@ function load() {
         var html = dataJson['html'];
 
         let idDiv = 'div-' + randomInteger(100, 99999);
-        htmlContent.find('div.selected').append($('<div class="widgetElement" id = "' + idDiv + '">' + html + '</div>'));
+        htmlContent.find('div.selected').append($('<div class="d-flex widgetElement" id = "' + idDiv + '">' + html + '</div>'));
         iframeDocCont.html(htmlContent.html());
 
         // iframeDocCont.find('div.selected').html(html);
